@@ -1,0 +1,189 @@
+<div class="addContainer">
+  <!-- encabezado modal -->
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <h4>Registro de Empleados</h4>
+        </div>
+      </div>
+    </div>
+    <!-- espacios para el boton cerrar -->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-icon-button matDialogClose class="modal-close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
+  <div mat-dialog-content>
+    <!-- Cuerpo del modal -->
+    <form #registroForm="ngForm" (ngSubmit)="registro(registroForm)" class="register-form m-4">
+      <div class="row">
+        <!-- Nombre empleado -->
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput type="text" required name="nombre" [(ngModel)]="empleados.nombre" />
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            <mat-error> Los nombres son requeridos </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Apellido empleado -->
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput type="text" required name="apellido" [(ngModel)]="empleados.apellido" />
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            <mat-error> Los apellidos son requeridos </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Telefono empleado -->
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Telefono</mat-label>
+            <input matInput type="number" required name="telefono" [(ngModel)]="empleados.telefono" />
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>call</mat-icon>
+            <mat-error> El numero de telefono es requeridos </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+         <!-- Direccion empleado -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Direccion</mat-label>
+            <textarea matInput type="text"  required name="direccion" [(ngModel)]="empleados.direccion"></textarea>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>add_location</mat-icon>
+            <mat-error>
+              La Direccion es requerida
+              </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+         <!-- Estado Civil empleado -->
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Seleccionar Estado Civil</mat-label>
+            <mat-select required="" name="civil" [(ngModel)]="empleados.civil">
+              <mat-option (onSelectionChange)="oncivil()" [value]="true">Casado | Casada</mat-option>
+              <mat-option (onSelectionChange)="offcivil()" [value]="false">Soltero | Soltera</mat-option>
+            </mat-select>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>favorite</mat-icon>
+            <mat-error>
+              El estado civil es requerido
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Tiene Hijos empleado -->
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-radio-group required name="tiene_hijos" [(ngModel)]="empleados.tiene_hijos">
+            <mat-label>El empleado tiene hijos</mat-label>
+            <mat-radio-button (change)="onTieneHijosChange()" [value]="true">Sí</mat-radio-button>
+            <mat-radio-button (change)="offTieneHijosChange()" [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row"  >
+           <!-- Nombre pareja del empleado -->
+           <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3" *ngIf="empleados.civil">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Nombre de la Pareja</mat-label>
+              <input matInput type="text"  name="pareja" [(ngModel)]="empleados.pareja" />
+              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>wc</mat-icon>
+              <mat-error> El nombre completo es requerido </mat-error>
+            </mat-form-field>
+          </div>
+            <!-- Numero de hijos del empleado -->
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3" *ngIf="empleados.tiene_hijos">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Numero de Hijos</mat-label>
+                <input matInput type="number" name="num_hijos" [(ngModel)]="empleados.num_hijos" />
+                <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>add_circle</mat-icon>
+                <mat-error> El nombre completo es requerido </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- Nombre de los hijos del empleado -->
+            <div class="row" *ngIf="empleados.tiene_hijos">
+              <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12 mb-3">
+                <mat-label style="font-weight: 400;">Ingrese el nombre de los hijos</mat-label>
+                <ckeditor [editor]="Editor" name="nom_hijos" [(ngModel)]="empleados.nom_hijos" ></ckeditor>
+            </div>
+            </div>
+      </div>
+      <br>
+      <div class="row">
+        <!-- Nit del empleado -->
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>NIT</mat-label>
+            <input matInput type="number" required name="nit" [(ngModel)]="empleados.nit">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>domain</mat-icon>
+            <mat-error> El NIT es requerido</mat-error>
+          </mat-form-field>
+      </div>
+      <!-- DPI del empleado -->
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>DPI</mat-label>
+          <input matInput type="number" required  required name="dpi" [(ngModel)]="empleados.dpi">
+          <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>contact_mail</mat-icon>
+          <mat-error> El DPI es requerido</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Fecha de contratacion-->
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Fecha de Contratacion</mat-label>
+          <input matInput [matDatepicker]="picker" required name="fecha_contra" [(ngModel)]="empleados.fecha_contra">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error> La fecha es requerida</mat-error>
+        </mat-form-field>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Salario Base</mat-label>
+            <input matInput type="number" required name="salario_base" [(ngModel)]="empleados.salario_base">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>attach_money</mat-icon>
+            <mat-error> El salario es requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Seleccionar el departamento de trabajo</mat-label>
+          <mat-select  required name="deparId" [(ngModel)]="empleados.deparId">
+            <mat-option *ngFor="let departamento of departamentos" [value]="departamento._id">{{ departamento.titulo }}</mat-option>
+          </mat-select>
+          <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>business_center</mat-icon>
+          <mat-error> El departamento de trabajo es requerido</mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+       <!-----------APARTADO PARA CARGAR IMAGEN----------------->
+       <div class="col-lg-4">
+        <div class="row">
+          <div class="col-lg-12 form-group">
+              <div class="custom-file">
+                <input class="custom-file-input" type="file" id="file-input" (change)="CargarImagen($event)">
+                <label class="custom-file-label" id="input-portada" for="file-input" style="white-space: nowrap;overflow:hidden;">Seleccionar imagen</label>
+              </div>
+          </div>
+          <div class="col-lg-12">
+            <img [src]="imgSelect" class="img-thumbnail" alt="Rounded image" >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" style="color: white !important;">Guardar</button>
+            <button mat-raised-button color="warn" tabindex="-1" matDialogClose >Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

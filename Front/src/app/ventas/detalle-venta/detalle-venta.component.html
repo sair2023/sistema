@@ -1,0 +1,52 @@
+<div class="addContainer">
+    <!-- encabezado modal -->
+    <div class="modalHeader">
+        <div class="editRowModal">
+            <div class="modalHeader clearfix">
+              <div class="modal-about">
+               <h4>Detalle de Venta</h4>
+              </div>
+            </div>
+        </div>
+         <!-- espacios para el boton cerrar -->
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-icon-button  matDialogClose class="modal-close-button" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <!-- Cuerpo del modal -->
+    <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
+    <div mat-dialog-content>
+      <h5>Venta Realizar por: {{empleado.nombre}} {{empleado.apellido}}</h5>
+      <br>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Descripcion</th>
+                <th class="text-center">Precio Unitario</th>
+                <th class="text-center">Sub total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ventas.productos">
+                <td class="text-center">{{item.cantidad}}</td>
+                <td class="text-center">{{item.descripcion}}</td>
+                <td class="text-center">Q {{item.precioUnitario}}</td>
+                <td class="text-center">Q {{item.subtotal}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+          <h6 style="text-align: right;">TOTAL: Q {{ventas.total}}</h6>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="warn" tabindex="-1" matDialogClose >Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

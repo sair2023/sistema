@@ -1,0 +1,104 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <app-breadcrumb [title]="'Listado de Empleados Desactivados'" [items]="['Empleados']"
+              [active_item]="'Empleados Desactivados'"></app-breadcrumb>
+          </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="materialTableHeader" style="
+                background: #bfc9ca !important;
+                border-radius: 10px 10px 0px 0px;
+              ">
+                 <div class="left">
+                    <ul class="header-buttons-left ms-0">
+                      <li class="tbl-title">
+                        <h2>Empleados</h2>
+                      </li>
+                      <li class="tbl-search-box">
+                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                        <input (keyup)="filtro()" name="filtro" [(ngModel)]="filtrado" placeholder="Busqueda de Empleados"
+                          #filter type="text" class="browser-default search-field" style="width: 210px !important"
+                          aria-label="Search box" />
+                      </li>
+                      <!--MODULO DE DEPARTAMENTO-->
+                      <li class="m-l-20"></li>
+                    </ul>
+                  </div>
+                  <div class="right">
+                    <ul class="tbl-export-btn">
+                      <li class="tbl-header-btn">
+                      </li>
+                      <li>
+                        <div (click)="exportExcel()"  class="export-button m-l-10" matTooltip="Exportar a Excel">
+                          <img src="assets/images/icons/xlsx.png" alt="Excel" />
+                        </div>
+                      </li>
+                      <li>
+                        <div class="export-button m-l-10" matTooltip="Exportar en PDF">
+                          <img src="assets/images/icons/pdf.png" alt="Excel" />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="body overflow-auto">
+                    <div class="body table-responsive">
+                      <table mat-table [dataSource]="dataSource" matSort>
+                        <!-- Define las columnas de tu tabla -->
+                        <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ titulosColumnas[columna] }}
+                          </th>
+                          <td mat-cell *matCellDef="let empleados">
+                            <!-- Muestra el nombre del departamento -->
+                            <ng-container *ngIf="columna === 'deparId'; else Columnas">
+                              {{ empleados.deparId.titulo }}
+                            </ng-container>
+                            <!-- Muestra la foto -->
+                            <ng-container *ngIf="columna === 'fotografia'">
+                              <td class="table-img text-center"> <img [src]="url+'obtener_foto/'+empleados.foto"  alt="Square image"></td>
+                              </ng-container>
+                              <!-- Estado Empleado -->
+                              <ng-template #Columnas>
+                              <ng-container *ngIf="columna === 'status'; else otrasColumnas">
+                                <div class="badge badge-solid-red">
+                                  {{ empleados.status }}
+                                </div >
+                             </ng-container>
+                            </ng-template>
+                            <ng-template #otrasColumnas>
+                            <ng-container *ngIf="columna !== 'acciones' ; else acciones">
+                              {{ empleados[columna] }}
+                            </ng-container>
+                          </ng-template>
+                            <ng-template #acciones>
+                              <button mat-icon-button (click)="Activar_Empleado(empleados._id)" matTooltip="Activar Empleado">
+                                <mat-icon style="color: #398f40">visibility</mat-icon>
+                              </button>
+                             </ng-template>
+                          </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                        <tr mat-row *matRowDef="let fila; columns: columnas"></tr>
+                      </table>
+                      <!-- Cuando no hay datos en la tabla -->
+                      <div *ngIf="dataSource.data.length === 0" style="justify-content: center; display: flex">
+                        <h4 class="m-b-15" style="padding: 15px;">
+                          <span class="label label-default">No hay datos disponibles.</span>
+                        </h4>
+                      </div>
+                      <div *ngIf="dataSource.data.length === 0" style="justify-content: center; display: flex">
+                        <img src="../../assets/images/icons/vacio.png" alt="" style="opacity: 20%; width: 20rem" />
+                      </div>
+                      <mat-progress-bar *ngIf="dataSource.data.length === 0" mode="buffer"></mat-progress-bar>
+                      <!-- Paginador -->
+                      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</section>

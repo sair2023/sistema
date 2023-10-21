@@ -1,0 +1,68 @@
+<div class="addContainer">
+    <!-- encabezado modal -->
+    <div class="modalHeader">
+      <div class="editRowModal">
+        <div class="modalHeader clearfix">
+          <div class="modal-about">
+            <h4>Registro de Expediente de <span class="badge-solid-green" style="border-radius: 15px;">{{ nombreEmpleado }} {{ apellidoEmpleado }}</span> </h4>
+          </div>
+        </div>
+      </div>
+      <!-- espacios para el boton cerrar -->
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button mat-icon-button matDialogClose class="modal-close-button" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
+    <div mat-dialog-content>
+      <!-- Cuerpo del modal -->
+      <form #registroForm="ngForm" (ngSubmit)="registro(registroForm)" class="register-form m-4">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Fecha de Creacion</mat-label>
+              <input matInput [matDatepicker]="picker" required name="fecha_creacion" [(ngModel)]="expedientes.fecha_creacion">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error> La fecha es requerida</mat-error>
+            </mat-form-field>
+          </div>
+          <hr>
+        </div>
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <label for="dpi">Documento de Identificacion unica DPI <i class="fas fa-address-card"></i></label>
+            <input type="file" name="dpi" id="dpi" (change)="onArchivoSeleccionado($event, 'dpi')">
+          </div>
+          <br>
+          <hr>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <label for="policiacos">Antecedentes Policiacos <i class="fas fa-file-pdf"></i></label>
+            <input type="file" name="policiacos" id="policiacos" (change)="onArchivoSeleccionado($event, 'policiacos')">
+          </div>
+          <br>
+          <hr>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <label for="penales">Antecedentes Penales <i class="fas fa-file-pdf"></i></label>
+            <input type="file" name="penales" id="penales" (change)="onArchivoSeleccionado($event, 'penales')">
+          </div>
+          <br>
+          <hr>
+         </div>   
+        <br>
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+            <div class="example-button-row">
+              <button mat-raised-button color="primary" style="color: white !important;">Guardar</button>
+              <button mat-raised-button color="warn" tabindex="-1" matDialogClose >Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

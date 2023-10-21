@@ -1,0 +1,102 @@
+<section class="content">
+    <div class="content-block">
+      <div class="block-header">
+        <app-breadcrumb [title]="'Panel Administrativo de Productos'" [items]="['Tienda']"
+          [active_item]="'Registro Porudctos'"></app-breadcrumb>
+      </div>
+      <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+        <div class="card">
+            <div class="materialTableHeader"style="
+            background: #252525 !important;
+            border-radius: 10px 10px 0px 0px;
+          ">
+                  <div class="left">
+                    <ul class="header-buttons-left ms-0">
+                      <li class="tbl-title">
+                        <h2 style="color: #ffff;">Registrar Producto Porudcto</h2>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="body">
+                <form #producto="ngForm" class="register-form m-4"(ngSubmit)="registrarProducto(producto)">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                              <mat-label>Codigo Producto</mat-label>
+                              <input matInput type="text" [(ngModel)]="codigo" required name="codigo">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    <div class="row">
+                    <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12 mb-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Descripcion del producto</mat-label>
+                          <input matInput type="text" required name="titulo" [(ngModel)]="titulo"/>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Precio del Producto</mat-label>
+                          <input matInput type="text" [(ngModel)]="precio" required name="precio">
+                        </mat-form-field>
+                      </div>
+                </div>
+                <div class="row">
+                    <button style="color: white;" mat-raised-button color="primary" type="submit">Registrar Producto</button>
+                 </div>
+                </form>
+              </div>
+        </div>
+      </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+          <div class="card">
+            <div class="materialTableHeader" style="
+                background: #252525 !important;
+                border-radius: 10px 10px 0px 0px;
+              ">
+               <div class="left">
+                <ul class="header-buttons-left ms-0">
+                  <li class="tbl-title">
+                    <h2 style="color: #ffff;">Listado de Porudctos</h2>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="body overflow-auto">
+                <div class="body table-responsive">
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <!-- Define las columnas de tu tabla -->
+                        <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ columna === 'acciones' ? 'Acciones' : columna | titlecase }}
+                          </th>
+                          <td mat-cell *matCellDef="let producto">
+                            <!-- Mostrar datos de usuario o botones de acciones según la columna -->
+                            <ng-container *ngIf="columna !== 'acciones'; else acciones">
+                              {{ producto[columna] }}
+                            </ng-container>
+                            <ng-template #acciones>
+                              <button mat-icon-button  matTooltip="Eliminar Usuario" (click)="eliminarDepa(producto._id)">
+                                <mat-icon style="color: red;">delete</mat-icon>
+                              </button>
+                            </ng-template>
+                          </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                        <tr mat-row *matRowDef="let fila; columns: columnas;"></tr>
+                      </table>
+                      <!-- Paginador -->
+                      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+</section>

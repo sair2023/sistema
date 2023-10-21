@@ -1,0 +1,97 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <app-breadcrumb [title]="'Bienvenido a la Tienda Solidaria'" [items]="['Compra']"
+                [active_item]="'Compra de Productos'">
+            </app-breadcrumb>
+        </div>
+        <div class="row clearfix">
+            <div class="row">
+                <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #252525; border-radius: 5px 5px 0 0;">
+                            <h2 style="color: #ffff;">Registro de venta</h2>
+                          </div>
+                          <div class="body">
+                            <form #ventaForm="ngForm" class="register-form m-4"(ngSubmit)="registrarVenta(ventaForm)">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <mat-form-field class="example-full-width" appearance="fill">
+                                              <mat-label>Fecha de venta</mat-label>
+                                              <input matInput [matDatepicker]="picker" required name="fecha" [(ngModel)]="fecha" >
+                                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                              <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                            <h4>{{empleados.nombre}}</h4>
+                                      </div>
+                                      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-2">
+                           
+                                        <mat-form-field class="example-full-width" appearance="fill">
+                                          <mat-label>Codigo Venta</mat-label>
+                                          <input matInput type="text" [(ngModel)]="numero_venta" required name="numero_venta">
+                                          <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>add_box</mat-icon>
+                                        </mat-form-field>
+                                      </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+                           
+                                      <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Cantidad</mat-label>
+                                        <input matInput type="number" [(ngModel)]="cantidad" name="cantidad" >
+                                        <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>add_box</mat-icon>
+                                      </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <select [(ngModel)]="productoSeleccionadoId" name="cantidad" (change)="seleccionarProducto()">
+                                          <option *ngFor="let prod of producto" [value]="prod._id">{{ prod.titulo }} - Precio: {{ prod.precio }}</option>
+                                        </select>
+                                      </div>
+                                      <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    </div>
+                                    <div class="col-xl-2 col-lg-8 col-md-12 col-sm-12 mb-2">
+                             
+                                    <button style="color: white;" mat-raised-button color="primary" type="button" (click)="agregarProducto() ; showNotification('snackbar-success','Producto Agregado...!!!','top','right')"  [disabled]="!puedesAgregarProducto()">Agregar Producto</button>
+                                    </div>
+                                 </div> 
+                                 <div class="row">
+                                    <h2>Productos Agregados:</h2>
+                                    <table class="table table-hover">
+                                        
+                                        <thead>
+                                          <tr>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Sub Total</th>
+                                            <th class="text-center">Acciones</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let producto of productos; let i = index">
+                                                <td class="text-center">{{ producto.cantidad }}</td>
+                                                <td class="text-center">Q {{ producto.subtotal }}</td> <!-- Mostrar el subtotal aquí -->
+                                                <td class="text-center">
+                                                  <button class="btn btn-danger btn-sm" (click)="eliminarProducto(i)">Eliminar</button>
+                                                </td>
+                                              </tr>
+                                             
+                                        </tbody>
+               
+                                      </table>
+                                      <h6 style="text-align: right;">Total: Q {{total}}</h6>
+                                 </div>
+                                 <br>
+                                 <br>
+                                 <div class="row">
+                                   
+                                    <button style="color: white;" mat-raised-button color="primary" type="submit">Registrar Venta</button>
+                                 </div>
+                             </form>
+                          </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

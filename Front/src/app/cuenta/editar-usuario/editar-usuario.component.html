@@ -1,0 +1,61 @@
+<div class="addContainer">
+    <!-- encabezado modal -->
+    <div class="modalHeader">
+        <div class="editRowModal">
+            <div class="modalHeader clearfix">
+              <div class="modal-about">
+               <h4>Editar Informacion de Usuario</h4>
+              </div>
+            </div>
+        </div>
+        <button mat-icon-button  matDialogClose class="modal-close-button" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+        </button>
+  
+    </div>
+    <!-- Cuerpo del modal -->
+    <div mat-dialog-content>
+        <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
+        <form [formGroup]="usuarioForm"  class="register-form m-4" (ngSubmit)="actualizar()">
+        <!---------------------------->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <!--INPUT DE CORREO-->
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Correo Electronico</mat-label>
+              <input matInput type="text" placeholder="Ingrese el correo electronico" required formControlName="correo">
+              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>email</mat-icon>
+              <mat-error>
+                Por favor ingresa tu correo
+              </mat-error>
+            </mat-form-field>
+          </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <!--INPUT DE PASSWORD-->
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese su contraseña" required formControlName="password">
+                    <a href="#" onClick="return false;" matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon class="material-icons-two-tone color-icon m-3" matSuffix>
+                      {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </a>
+                  <mat-error>
+                    Contraseña requerida
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+        <!---------------------------->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                  <div class="example-button-row">
+                    <button mat-raised-button color="primary" style="color: white !important;">Guardar</button>
+                    <button mat-raised-button color="warn" tabindex="-1" matDialogClose >Cancel</button>
+                  </div>
+                </div>
+              </div>
+        </form>
+    </div>
+  </div>
+  

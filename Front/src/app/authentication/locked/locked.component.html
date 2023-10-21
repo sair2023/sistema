@@ -1,0 +1,26 @@
+<div class="auth-container">
+    <div class="row auth-main">
+      <div class="col-sm-6 px-0 d-none d-sm-block">
+        <div class="left-img"[ngStyle]="{ 'background-image': 'url(' + currentImage + ')' }" [@backgroundChange]="currentImage">
+        </div>
+      </div>
+      <div class="col-sm-6 auth-form-section">
+        <div class="form-section">
+          <div class="auth-wrapper">
+            <div class="container-auth-form-btn mt-5">
+                <h1 class="m-b-20">
+                <span class="label label-success">
+                    &nbsp;Verificacion Exitosa!!
+                  </span>
+                </h1>
+                <button mat-raised-button color="primary" class="auth-form-btn" style="color: white;" routerLink="/login/iniciar_sesion"
+                  type="submit">
+                  Iniciar Sesion
+                </button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,56 @@
+$background-color: #292931;
+$button-color: #1B1B1B;
+$button-width: 10em;
+
+label[for="dpi"]{
+  display: block;
+  margin-bottom: 1em;
+  font-size: 1em;
+  color: #000000;
+  opacity: .9;
+  font-weight: 500;
+}
+
+label[for="penales"]{
+    display: block;
+    margin-bottom: 1em;
+    font-size: 1em;
+    color: #000000;
+    opacity: .9;
+    font-weight: 500;
+  }
+
+
+  label[for="policiacos"]{
+    display: block;
+    margin-bottom: 1em;
+    font-size: 1em;
+    color: #000000;
+    opacity: .9;
+    font-weight: 500;
+  }
+
+
+input[type="file"] {
+  
+  cursor: pointer !Important;
+  
+  &::-webkit-file-upload-button {
+    background: $button-color;
+    border: 0;
+    padding: 1em 2em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: .5em;
+  }
+  
+  &::-ms-browse {
+    background: $button-color;
+    border: 0;
+    padding: 1em 2em;
+    cursor: pointer;
+    color: #fff;
+    border-radius: .5em;
+  }
+  
+}

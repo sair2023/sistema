@@ -1,0 +1,139 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <app-breadcrumb [title]="'Panel Administrativo de Expedientes'" [items]="['Empleados']"
+                [active_item]="'Expedientes de Empleados'"></app-breadcrumb>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card" >
+                    <div class="body" >
+                        <div id="plist" class="people-list">
+                            <div class="form-line m-b-15">
+                                <input (keyup)="filtro()" name="filtro" [(ngModel)]="filtrado" type="text" class="form-control" placeholder="Buscar Empleado......" >
+                                <br>
+                                <mat-progress-bar style="background: black !important;" value="100"></mat-progress-bar>
+                            </div>
+                            <div class="tab-content" >
+                                <ng-scrollbar style="height: 690px;">
+                                    <ng-template #noData>
+                                        <li class="no-data-message">No se encontraron empleados.</li>
+                                    </ng-template>
+                                    <div id="chat_user" *ngIf="empleados && empleados.length > 0; else noData">
+                                        <ul class="chat-list list-unstyled m-b-0">
+                                            <li class="clearfix" *ngFor="let item of empleados" >
+                                                <img [src]="url+'obtener_foto/'+item.foto" alt="avatar" style="height: 40px; width: 40px;">
+                                                <div class="about">
+                                                    <div class="name">{{item.nombre}} {{item.apellido}} </div>
+                                                    <div class="status">
+                                                        <i class="material-icons online">fiber_manual_record</i>
+                                                        {{item.status}}
+                                                    </div>
+                                                </div>
+                                              <div class="about">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<span>Opciones</span><button (click)="openExpediente(item._id)" mat-icon-button  matTooltip="Crear Expediente">
+                                                        <mat-icon >file_upload</mat-icon>
+                                                      </button>
+                                                     <button (click)="mostrarDetallesEmpleado(item._id)" mat-icon-button  matTooltip="Ver Expediente">
+                                                        <mat-icon >content_paste</mat-icon>
+                                                      </button>
+                                                </div>
+                                         
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                </ng-scrollbar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"  *ngFor="let item of expediente">
+                <div class="card">
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <img [src]="url+'obtener_foto/'+item.empleadoId.foto" alt="avatar" style="height: 70px; width: 70px; border-radius: 0 0 0 0; padding: 10px 0 0 10px;">
+                            <div class="chat-about">
+                                <div class="chat-with">{{ item.empleadoId.nombre}} {{ item.empleadoId.apellido}}</div>
+                                <div class="chat-num-messages">Nit :{{ item.empleadoId.nit}}</div>
+                                <div class="chat-num-messages">Dpi: {{ item.empleadoId.dpi}}</div>
+                              </div>
+                        </div>
+                            <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+                            <mat-tab label="Dpi">
+                                <pdf-viewer
+                                [src]="url+'obtener_pdf/'+item.dpi"
+                                [rotation]="0"
+                                [original-size]="false"
+                                [show-all]="true"
+                                [fit-to-page]="true"
+                                [zoom]="1"
+                                [zoom-scale]="'page-width'"
+                                [stick-to-page]="false"
+                                [render-text]="true"
+                                [external-link-target]="'blank'"
+                                [autoresize]="true"
+                                [show-borders]="false"
+                                style="width: 100%; height: 500px;"
+                              ></pdf-viewer>
+                            </mat-tab>
+                            <mat-tab label="Antecedentes Penales">
+                                <pdf-viewer
+                                [src]="url+'obtener_pdf/'+item.penales"
+                                [rotation]="0"
+                                [original-size]="false"
+                                [show-all]="true"
+                                [fit-to-page]="true"
+                                [zoom]="1"
+                                [zoom-scale]="'page-width'"
+                                [stick-to-page]="false"
+                                [render-text]="true"
+                                [external-link-target]="'blank'"
+                                [autoresize]="true"
+                                [show-borders]="false"
+                                style="width: 100%; height: 500px;"
+                              ></pdf-viewer>
+                            </mat-tab>
+                            <mat-tab label="Antecedentes Policiacos">
+                                <pdf-viewer
+                                [src]="url+'obtener_pdf/'+item.policiacos"
+                                [rotation]="0"
+                                [original-size]="false"
+                                [show-all]="true"
+                                [fit-to-page]="true"
+                                [zoom]="1"
+                                [zoom-scale]="'page-width'"
+                                [stick-to-page]="false"
+                                [render-text]="true"
+                                [external-link-target]="'blank'"
+                                [autoresize]="true"
+                                [show-borders]="false"
+                                style="width: 100%; height: 500px;"
+                              ></pdf-viewer>
+                            </mat-tab>
+                        </mat-tab-group>
+                        <div class="chat-message clearfix">
+                            <div class="chat-upload">
+                                <!-- dpi -->
+                               <a [attr.href]="url+'obtener_pdf/'+item.dpi" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Dpi" [hidden]="selectedTabIndex !== 0"> <i class="material-icons">local_printshop</i></button></a> 
+
+                               <!-- penales -->
+                               <a [attr.href]="url+'obtener_pdf/'+item.penales" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Antecedentes Penales" [hidden]="selectedTabIndex !== 1"> <i class="material-icons">local_printshop</i></button></a> 
+                           
+                                <!-- policiacos -->
+                                <a [attr.href]="url+'obtener_pdf/'+item.policiacos" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Antecedentes Policiacos" [hidden]="selectedTabIndex !== 2"> <i class="material-icons">local_printshop</i></button></a> 
+
+                                <!-- editar -->
+                                <button mat-mini-fab class="bg-black"matTooltip="Editar Expediente" (click)="editarExpediente(item.empleadoId._id, item._id)" > <i class="material-icons">create</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"  *ngIf="mostrarImagen">
+                <img src="../../../assets/images/banner/expediente.svg" alt="expdiente" style="height: 780px; width: 100%; ">
+            </div>
+        </div>
+    </div>
+</section>

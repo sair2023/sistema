@@ -1,0 +1,113 @@
+<div class="auth-container">
+    <div class="row auth-main">
+        <div class="col-sm-6 px-0 d-none d-sm-block">
+            <div class="left-img" style="background-image: url(../../../assets/images/pages/Inicio.svg);">
+            </div>
+        </div>
+        <div class="col-sm-6 auth-form-section">
+            <div class="form-section">
+                <div class="auth-wrapper">
+                    <h1 class="welcome-msg">Registra tu empresa</h1>
+                    <p class="auth-signup-text text-muted">¿Ya tienes una cuenta?
+                        <a class="sign-up-link" style="color: #3a8f40 !important;" routerLink="/login/iniciar_sesion">Inicia Sesion
+                        </a>
+                    </p>
+                    <form class="validate-form" #registroForm="ngForm" (ngSubmit)="registro(registroForm)">
+                        <!--Nombre de empresa-->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Nombre Empresa</mat-label>
+                                    <input matInput type="text" required name="nombre" [(ngModel)]="empresa.nombre">
+                                    <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>business</mat-icon>
+                                    <mat-error>
+                                        Nombre de la empresa requerido
+                                      </mat-error>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                         <!--Direccion de empresa-->
+                         <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Direccion</mat-label>
+                                    <input matInput type="text" required name="direccion" [(ngModel)]="empresa.direccion">
+                                    <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>location_on</mat-icon>
+                                    <mat-error>
+                                        Direccion de la empresa requerida
+                                      </mat-error>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                        <!--Correo electronico-->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>Correo Electronico</mat-label>
+                                    <input matInput type="email" required name="correo" [(ngModel)]="empresa.correo">
+                                    <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>email</mat-icon>
+                                    <mat-error>
+                                      Por favor ingresa tu correo
+                                    </mat-error>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                          <!--Contraseña-->
+                          <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'"  name="password" [(ngModel)]="empresa.password" required>
+                                    <a href="#" onClick="return false;" matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon class="material-icons-two-tone color-icon m-3" matSuffix>
+                                      {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                  </a>
+                                  <mat-error>
+                                    Contraseña requerida
+                                  </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                           <!--telefono-->
+                           <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>Telefono</mat-label>
+                                    <input matInput type="number" required name="telefono" [(ngModel)]="empresa.telefono">
+                                    <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+                                    <mat-error>
+                                      El numero de telefono es requerido
+                                    </mat-error>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                        <!--NIT-->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>NIT</mat-label>
+                                    <input matInput type="text" required name="dpi" [(ngModel)]="empresa.nit">
+                                    <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>contact_phone</mat-icon>
+                                    <mat-error>
+                                      El NIT es requerido
+                                    </mat-error>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                         <!--Boton-->
+                        <div class="row">
+                          <div class="container-auth-form-btn">
+                           <div style="text-align:center">
+                            <button mat-raised-button color="primary" style="color: white !important;" class="auth-form-btn"  type="submit">
+                                Ingresar
+                            </button>
+                           </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+  </div>

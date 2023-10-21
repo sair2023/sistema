@@ -1,0 +1,45 @@
+<div class="addContainer">
+    <!-- encabezado modal -->
+    <div class="modalHeader">
+        <div class="editRowModal">
+            <div class="modalHeader clearfix">
+              <div class="modal-about">
+               <h4>Listado de Departamentos de Trabajos</h4>
+              </div>
+            </div>
+        </div>
+        <!-- espacios para el boton cerrar -->
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-icon-button  matDialogClose class="modal-close-button" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content>
+    <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
+    <div class="body table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <!-- Define las columnas de tu tabla -->
+            <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ columna === 'acciones' ? 'Acciones' : columna | titlecase }}
+              </th>
+              <td mat-cell *matCellDef="let departamentos">
+                <!-- Mostrar datos de usuario o botones de acciones según la columna -->
+                <ng-container *ngIf="columna !== 'acciones'; else acciones">
+                  {{ departamentos[columna] }}
+                </ng-container>
+                <ng-template #acciones>
+                  <button mat-icon-button  matTooltip="Eliminar Usuario" (click)="eliminarDepa(departamentos._id)">
+                    <mat-icon style="color: red;">delete</mat-icon>
+                  </button>
+                </ng-template>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let fila; columns: columnas;"></tr>
+          </table>
+          <!-- Paginador -->
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+    </div>
+</div>

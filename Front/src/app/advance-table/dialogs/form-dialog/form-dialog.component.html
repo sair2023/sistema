@@ -1,0 +1,134 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <img [src]='advanceTable.img' alt="avatar">
+        <div class="modal-about">
+          {{dialogTitle}}
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="modal-close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="advanceTableForm" (ngSubmit)="submit">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="fName">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            <mat-error *ngIf="advanceTableForm.get('fName')?.hasError('required')">
+              requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="lName">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            <mat-error *ngIf="advanceTableForm.get('lName')?.hasError('required')">
+              requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="m-b-20">
+            <mat-label class="msr-3">Genero:</mat-label>
+            <mat-radio-group aria-label="Select gender" formControlName="gender" required>
+              <mat-radio-button value="Hombre">Hombre</mat-radio-button>
+              <mat-radio-button value="Mujer">Mujer</mat-radio-button>
+              <mat-radio-button value="Otro">Otro</mat-radio-button>
+              <mat-error *ngIf="advanceTableForm.get('gender')?.hasError('required')">
+                Escoje uno
+              </mat-error>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Correo Electronico</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>email</mat-icon>
+            <mat-error
+              *ngIf="advanceTableForm.get('email')?.hasError('required') || advanceTableForm.get('email')?.touched">
+              Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Fecha Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="bDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="advanceTableForm.get('bDate')?.hasError('required')">
+             Dato requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Telefono</mat-label>
+            <input matInput formControlName="mobile" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            <mat-error *ngIf="advanceTableForm.get('mobile')?.hasError('required')">
+              Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width " appearance="outline">
+            <mat-label>Departamento</mat-label>
+            <mat-select formControlName="country" required>
+              <mat-option [value]="'Informatica'">
+                Informatica
+              </mat-option>
+              <mat-option [value]="'Financiero'">
+                Financiero
+              </mat-option>
+              <mat-option [value]="'Recursos Humanos'">
+                Recursos Humanos
+              </mat-option>
+              <mat-option [value]="'Contabilidad'">
+                Contabilidad
+              </mat-option>
+              <mat-option [value]="'Administracion'">
+                Administracion
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="advanceTableForm.get('country')?.hasError('required')">
+              Departamento requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Direccion</mat-label>
+            <textarea matInput formControlName="address"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" [disabled]="!advanceTableForm.valid" [mat-dialog-close]="1"
+              (click)="confirmAdd()">Guardar</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

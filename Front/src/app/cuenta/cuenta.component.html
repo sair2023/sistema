@@ -1,0 +1,168 @@
+<section class="content">
+    <div class="content-block">
+      <div class="block-header">
+        <app-breadcrumb [title]="'Mi perfil'" [items]="['Perfil']" [active_item]="'Perfil'">
+        </app-breadcrumb>
+      </div>
+      <div class="row clearfix">
+        <div class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="m-b-20">
+                    <div class="contact-grid">
+                        <div class="profile-header bg-dark">
+                            <div class="user-name">{{usuario.empleadoId?.nombre}} {{usuario.empleadoId?.apellido}}</div>
+                            <div class="name-center">{{empleados.deparId?.titulo}}</div>
+                          </div>
+                          <img [src]="url+'obtener_foto/'+empleados.foto" class="user-img"  alt="Square image">
+                          <br>
+                          <p class="badge badge-solid-green">{{usuario.status}}</p>
+                          <br>
+                          <button type="button" (click)="openEdit(empleados._id)" class="btn btn-outline-success"matTooltip="Editar Datos"> <i class="material-icons">person</i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <button type="button" (click)="editDialog(usuario._id)" class="btn btn-outline-success"matTooltip="Editar Usuario"> <i class="material-icons">domain</i></button>
+                          <mat-tab-group mat-align-tabs="start" >
+                            <mat-tab label="Sobre Mi">
+                                <div id="mail-nav" style="text-align: left; padding-left: 20px; padding-right: 20px;">
+                                    <br>
+                                <ul class="online-user" id="online-offline">
+                                    <li>
+                                    <i class="material-icons col-green" title="Online">brightness_1</i><strong>Correo Electronico:</strong> {{usuario.correo}}
+                                    </li>
+                                    <hr>
+                                    <li>
+                                    <i class="material-icons col-green" title="Online">brightness_1</i><strong>Telefono:</strong> {{empleados.telefono}}
+                                    </li>
+                                    <hr>  
+                                    <li>
+                                    <i class="material-icons col-green" title="Online">brightness_1</i><strong>DPI:</strong> {{empleados.dpi}}
+                                    </li>
+                                    <hr>
+                                    <li>
+                                    <i class="material-icons col-green" title="Online">brightness_1</i><strong>NIT:</strong> {{empleados.nit}}
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <i class="material-icons col-green" title="Online">brightness_1</i><strong>Direccion:</strong> {{empleados.direccion}}
+                                        </li>
+                                     <hr>
+                                     <li>
+                                        <i class="material-icons col-green" title="Online">brightness_1</i><strong>Fecha Contratacion:</strong> {{empleados.fecha_contra | date:'dd-MM-yyyy'}}
+                                        </li>
+                                     <hr>  
+                                     <li>
+                                        <i class="material-icons col-green" title="Online">brightness_1</i><strong>Estado Civil:</strong> {{ empleados.civil ? 'Casado | Casada' : 'Soltero | Soltera' }}
+                                        </li>
+                                        <hr>
+                                        <li>
+                                            <i class="material-icons col-green" title="Online">brightness_1</i><strong>Salario:</strong> Q {{ empleados.salario_base}}
+                                            </li>   
+                                  </ul>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Datos Familiares">
+                                <div id="mail-nav" style="text-align: left; padding-left: 20px; padding-right: 20px;">
+                                    <br>
+                                <ul class="online-user" id="online-offline">
+                                    <li>
+                                    <i class="material-icons col-green" title="Online">brightness_1</i><strong>Nombre Pareja:</strong> {{empleados.pareja}}
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <i class="material-icons col-green" title="Online">brightness_1</i><strong>Hijos:</strong> {{ empleados.tiene_hijos ? 'Si' : 'No' }}
+                                        </li>
+                                        <hr>
+                                        <li>
+                                            <i class="material-icons col-green" title="Online">brightness_1</i><strong>Numero de Hijos:</strong> {{empleados.num_hijos}}
+                                            </li>
+                                            <hr>
+                                        <li>
+                                            <i class="material-icons col-green" title="Online">brightness_1</i><strong>Nombre de los Hijos:</strong> {{empleados.nom_hijos}}
+                                            </li>
+                                  </ul>
+                                </div>
+                            </mat-tab>
+                          </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="card">
+                <h4 class="bg-black" style="text-align: center; padding: 7px;">EXPEDIENTE</h4> 
+                  <div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let item of expedientes">
+                    <div class="project_widget">
+                        <mat-tab-group mat-align-tabs="start" >
+                        <mat-tab label="DPI">
+                        <pdf-viewer
+                        [src]="url+'obtener_pdf/'+item.dpi"
+                        [rotation]="0"
+                        [original-size]="false"
+                        [show-all]="true"
+                        [fit-to-page]="true"
+                        [zoom]="1"
+                        [zoom-scale]="'page-width'"
+                        [stick-to-page]="false"
+                        [render-text]="true"
+                        [external-link-target]="'blank'"
+                        [autoresize]="true"
+                        [show-borders]="false"
+                        style="width: 100%; height: 600px;"
+                      ></pdf-viewer>
+                        </mat-tab>
+                        <mat-tab label="Antecedentes Penales">
+                            <pdf-viewer
+                            [src]="url+'obtener_pdf/'+item.penales"
+                            [rotation]="0"
+                            [original-size]="false"
+                            [show-all]="true"
+                            [fit-to-page]="true"
+                            [zoom]="1"
+                            [zoom-scale]="'page-width'"
+                            [stick-to-page]="false"
+                            [render-text]="true"
+                            [external-link-target]="'blank'"
+                            [autoresize]="true"
+                            [show-borders]="false"
+                            style="width: 100%; height: 600px;"
+                          ></pdf-viewer>
+                            </mat-tab>
+                            <mat-tab label="Antecedentes Policiacos">
+                                <pdf-viewer
+                                [src]="url+'obtener_pdf/'+item.policiacos"
+                                [rotation]="0"
+                                [original-size]="false"
+                                [show-all]="true"
+                                [fit-to-page]="true"
+                                [zoom]="1"
+                                [zoom-scale]="'page-width'"
+                                [stick-to-page]="false"
+                                [render-text]="true"
+                                [external-link-target]="'blank'"
+                                [autoresize]="true"
+                                [show-borders]="false"
+                                style="width: 100%; height: 600px;"
+                              ></pdf-viewer>
+                                </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                    <div class="chat-message clearfix" style="padding: 20px;">
+                        <div class="chat-upload">
+                            <!-- dpi -->
+                           <a [attr.href]="url+'obtener_pdf/'+item.dpi" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Dpi" [hidden]="selectedTabIndex !== 0"> <i class="material-icons">local_printshop</i></button></a> 
+
+                           <!-- penales -->
+                           <a [attr.href]="url+'obtener_pdf/'+item.penales" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Antecedentes Penales" [hidden]="selectedTabIndex !== 1"> <i class="material-icons">local_printshop</i></button></a> 
+                       
+                            <!-- policiacos -->
+                            <a [attr.href]="url+'obtener_pdf/'+item.policiacos" target="_blank"><button mat-mini-fab class="bg-green msr-2"  matTooltip="Imprimir Antecedentes Policiacos" [hidden]="selectedTabIndex !== 2"> <i class="material-icons">local_printshop</i></button></a> 
+                             <!-- editar -->
+                             <button mat-mini-fab class="bg-black"matTooltip="Editar Expediente" (click)="editarExpediente(item.empleadoId._id, item._id)" > <i class="material-icons">create</i></button>
+                        </div>
+                    </div>
+                  </div>
+              
+            </div>
+          </div>
+      </div>
+    </div>
+</section>

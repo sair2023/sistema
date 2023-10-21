@@ -1,0 +1,119 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <app-breadcrumb [title]="'Panel Administrativo de Usuarios'" [items]="['Usuarios']"
+        [active_item]="'Usuario'"></app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="materialTableHeader" style="background: #BFC9CA !important;  border-radius: 10px 10px 0px 0px;">
+            <div class="left">
+              <ul class="header-buttons-left ms-0">
+                <li class="tbl-title">
+                  <h2>Usuarios</h2>
+                </li>
+                <li class="tbl-search-box">
+                  <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                  <input (keyup)="filtro()" name="filtro" [(ngModel)]="filtrado" placeholder="Busqueda de Usuarios"
+                    #filter type="text" class="browser-default search-field" style="width: 210px !important;"
+                    aria-label="Search box">
+                </li>
+              </ul>
+            </div>
+            <div class="right">
+              <ul class="tbl-export-btn">
+                <li class="tbl-header-btn">
+                  <div class="m-l-10" [hidden]=!selection.hasValue() matTooltip="Desabilitar Uusarios">
+                    <button mat-mini-fab  class="btn bg-orange btn-lg btn-block waves-effect" (click)="deshabilitarUsuariosSeleccionados()">
+                      <mat-icon class="col-white">not_interested
+                      </mat-icon>
+                    </button>
+                  </div>
+                </li>
+                <li class="tbl-header-btn">
+                  <div class="m-l-10" matTooltip="Registrar Usuario">
+                    <button mat-mini-fab color="primary" (click)="openDialog()">
+                      <mat-icon class="col-white">add</mat-icon>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <div class="export-button m-l-10" matTooltip="Exportar a Excel">
+                    <img src="assets/images/icons/xlsx.png" alt="Excel" />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="body overflow-auto">
+            <div class="body table-responsive">
+              <table mat-table [dataSource]="dataSource" matSort>
+                <!-- Define las columnas de tu tabla -->
+                <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <ng-container *ngIf="columna === 'seleccion' ">
+                      <mat-checkbox (change)="toggleSeleccionGeneral()" [checked]="isAllSelected()"></mat-checkbox>
+                    </ng-container>
+                    {{ titulosColumnas[columna] }}
+                  </th>
+                  <td mat-cell *matCellDef="let usuario">
+                
+                    <ng-container *ngIf="columna === 'seleccion' ">
+                      <mat-checkbox (change)="toggleSeleccion(usuario)" [checked]="selection.isSelected(usuario)"></mat-checkbox>
+                    </ng-container>
+                       <!-- Mostrar datos de usuario o botones de acciones según la columna -->
+                       <ng-container *ngIf="columna === 'status'; else Columnas">
+                        <div class="badge badge-solid-red" *ngIf="usuario.status === 'INACTIVO'">
+                          {{ usuario.status }}
+                        </div >
+                        <div class="badge badge-solid-green" *ngIf="usuario.status === 'ACTIVO'" >
+                          {{ usuario.status }}
+                        </div>
+                      </ng-container>
+                    <ng-template #Columnas>
+                      <ng-container *ngIf="columna === 'empleadoId'; else otrasColumnas">
+                        {{ usuario.empleadoId.nombre }} {{ usuario.empleadoId.apellido }}
+                      </ng-container>
+                    </ng-template>
+                    
+                    <ng-template #otrasColumnas>
+                      <ng-container *ngIf="columna !== 'acciones'; else acciones">
+                        {{ usuario[columna] }}
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #acciones>
+                      <button mat-icon-button matTooltip="Activar Usuario" *ngIf="usuario.status === 'INACTIVO'" (click)="ActivarUsuario(usuario._id)">
+                        <mat-icon style="color: #6fb537;">offline_pin</mat-icon>
+                      </button>
+                      <button mat-icon-button matTooltip="Editar Usuario" (click)="editDialog(usuario._id)">
+                        <app-feather-icons [icon]="'edit'"></app-feather-icons>
+                      </button>
+                      <button mat-icon-button (click)="eliminarUsuario(usuario._id)" matTooltip="Eliminar Usuario" *ngIf="usuario.status === 'INACTIVO'">
+                        <mat-icon style="color: red;">delete</mat-icon>
+                      </button>
+                    </ng-template>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let fila; columns: columnas;"></tr>
+              </table>
+              <!-- Cuando no hay datos en la tabla -->
+              <div *ngIf="dataSource.data.length === 0" style="justify-content: center; display: flex">
+                <h4 class="m-b-15" style="padding: 15px;">
+                  <span class="label label-default">No hay datos disponibles.</span>
+                </h4>
+              </div>
+              <div *ngIf="dataSource.data.length === 0" style="justify-content: center; display: flex">
+                <img src="../../assets/images/icons/vacio.png" alt="" style="opacity: 20%; width: 20rem" />
+              </div>
+              <mat-progress-bar *ngIf="dataSource.data.length === 0" mode="buffer"></mat-progress-bar>
+              <!-- Paginador -->
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
